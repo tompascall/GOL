@@ -4,13 +4,15 @@
 
 var gol = {};
 
+
+
 gol.willAlive = function(cell){
   if (cell.liveNeighbours < 2 || cell.liveNeighbours > 3) return false;
-  if (cell.live === true &&
+  if (cell.alive === true &&
     (cell.liveNeighbours === 2 || cell.liveNeighbours === 3)) {
       return true;
     }
-  if (cell.live === false && cell.liveNeighbours === 3) return true;
+  if (cell.alive === false && cell.liveNeighbours === 3) return true;
 };
 
 gol.Point = function(x, y){
@@ -24,7 +26,7 @@ gol.Point.prototype.getCoords = function(){
 
 gol.Cell = function(point){
   this.coords = point.getCoords();
-  this.live = true;
+  // this.live = true;
 };
 
 gol.World = function(){
@@ -36,16 +38,23 @@ gol.World = function(){
      ];
 };
 
-gol.World.prototype.count = function(){
+gol.World.prototype.countLivings = function(){
+  var livings = this.table.filter(function(cell){
+    return cell.alive;
+  });
+  return livings.length;
+};
+
+gol.World.prototype.countCells = function(){
   return this.table.length;
 };
 
 gol.World.prototype.emptyWorld = function(){
-  return (this.count() === 0) ? true : false;
+  return (this.countLivings() === 0) ? true : false;
 };
 
 gol.World.prototype.addCell = function(cell){
-  this.table.push(cell.coords);
+  this.table.push(cell);
 };
 
 gol.World.prototype.removeCell = function(cell){
@@ -58,12 +67,12 @@ gol.World.prototype.removeCell = function(cell){
 gol.World.prototype.isAlive = function(point){
   var alive = false;
   this.table.forEach(function(elem){
-    if (elem.x === point.x && elem.y === point.y) alive = true;
+    if (elem.coords.x === point.x && elem.coords.y === point.y && elem.alive) alive = true;
   });
   return alive;
 };
 
-gol.countNeighbours = function(cell, world){
+gol.countLiveNeighbours = function(cell, world){
   var cellCoord = cell.coords;
   var point;
   var count = 0;
@@ -73,6 +82,37 @@ gol.countNeighbours = function(cell, world){
     if (world.isAlive(point)) count++;
   });
   return count;
+};
+
+gol.Scope = function(width, height){
+  this.space = [];
+  this.width = width;
+  this.height = height;
+
+  for (var i = 0; i < width; i++){
+    for (var j = 0; j < height; j++){
+      this.space.push(' ');
+    }
+  }
+};
+
+gol.Scope.prototype.length = function(){
+  return this.space.length;
+};
+
+gol.Scope.prototype.seed = function(world, seed){
+  var point;
+  var cell;
+  for (var i = 0; i < this.width; i++){
+    for (var j = 0; j < this.height; j++){
+      point = new gol.Point(i, j);
+      if (seed[i * this.width + j]) {
+        cell = new gol.Cell(point);
+        cell.alive = true;
+        world.addCell(cell);
+      }
+    }
+  }
 };
 
 module.exports = gol;
