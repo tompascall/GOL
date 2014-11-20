@@ -22,7 +22,7 @@ describe('unit tests', function(){
   it('sholud test the second rule', function(){
     // Any live cell with two or three live neighbours
     // lives on to the next generation.
-    cell = {live: true};
+    cell.live = true;
     liveNeighbours = 2;
     expect(gol.willAlive(cell, liveNeighbours)).to.be(true);
     liveNeighbours = 3;
@@ -32,8 +32,16 @@ describe('unit tests', function(){
   it('should test the third rule', function(){
     // Any live cell with more than
     // three live neighbours dies, as if by overcrowding
-    cell = {live: true};
+    cell.live = true;
     liveNeighbours = 4;
     expect(gol.willAlive(cell, liveNeighbours)).to.be(false);
+  });
+
+  it('sholud test the fourth rule', function(){
+    // Any dead cell with exactly three live neighbours
+    // becomes a live cell, as if by reproduction
+    cell.live = false;
+    liveNeighbours = 3;
+    expect(gol.willAlive(cell, liveNeighbours)).to.be(true);
   });
 });
