@@ -11,17 +11,28 @@ gol.willAlive = function(cell, liveNeighbours){
   if (cell.live === false && liveNeighbours === 3) return true;
 };
 
-gol.emptyWorld = function(world){
-  return (world.length === 0) ? true : false;
+gol.World = function(){
+  this.table = [];
 };
 
-gol.addCell = function(world, cell){
-  world.push(cellCoord(cell));
-  return world;
+gol.World.prototype.count = function(){
+  return this.table.length;
+};
 
-  function cellCoord(cell){
-    return cell.x + ';' + cell.y;
-  }
+gol.World.prototype.emptyWorld = function(){
+  return (this.count() === 0) ? true : false;
+};
+
+gol.World.prototype.addCell = function(cell){
+  cell = cell.x + ';' + cell.y;
+  this.table.push(cell);
+};
+
+gol.World.prototype.removeCell = function(cell){
+  cell = cell.x + ';' + cell.y;
+  this.table = this.table.filter(function(elem){
+    return elem !== cell;
+  });
 };
 
 module.exports = gol;

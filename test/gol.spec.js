@@ -7,11 +7,12 @@ var liveNeighbours;
 var cell = {};
 
 
-afterEach(function(){
-  cell = {};
-});
 
 describe('test rules', function(){
+  afterEach(function(){
+    cell = {};
+  });
+
   it('should test the first rule', function(){
     // Any live cell with less than two live
     // neighbours dies, as if caused by under-population.
@@ -47,16 +48,26 @@ describe('test rules', function(){
 });
 
 describe('test world', function(){
+
   it('should be true if the world is empty', function(){
-    var world = [];
-    expect(gol.emptyWorld(world)).to.equal(true);
+    var world = new gol.World();
+    expect(world.emptyWorld()).to.equal(true);
   });
 
   it('should add a cell to the world', function(){
-    var world = [];
+     cell.x = 1;
+     cell.y = 1;
+     var world = new gol.World();
+     world.addCell(cell);
+     expect(world.emptyWorld()).to.equal(false);
+  });
+
+  it('should remove a cell from the world', function(){
     cell.x = 1;
     cell.y = 1;
-    world = gol.addCell(world, cell);
-    expect(gol.emptyWorld(world)).to.equal(false);
+    var world = new gol.World();
+    world.addCell(cell);
+    world.removeCell(cell);
+    expect(world.emptyWorld()).to.equal(true);
   });
 });
