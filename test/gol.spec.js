@@ -7,6 +7,10 @@ var liveNeighbours;
 var cell = {};
 
 
+afterEach(function(){
+  cell = {};
+});
+
 describe('unit tests', function(){
   it('should test the first rule', function(){
     // Any live cell with less than two live
@@ -21,5 +25,15 @@ describe('unit tests', function(){
     cell = {live: true};
     liveNeighbours = 2;
     expect(gol.willAlive(cell, liveNeighbours)).to.be(true);
+    liveNeighbours = 3;
+    expect(gol.willAlive(cell, liveNeighbours)).to.be(true);
+  });
+
+  it('should test the third rule', function(){
+    // Any live cell with more than
+    // three live neighbours dies, as if by overcrowding
+    cell = {live: true};
+    liveNeighbours = 4;
+    expect(gol.willAlive(cell, liveNeighbours)).to.be(false);
   });
 });
