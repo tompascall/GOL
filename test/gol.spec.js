@@ -11,7 +11,7 @@ afterEach(function(){
   cell = {};
 });
 
-describe('unit tests', function(){
+describe('test rules', function(){
   it('should test the first rule', function(){
     // Any live cell with less than two live
     // neighbours dies, as if caused by under-population.
@@ -43,5 +43,20 @@ describe('unit tests', function(){
     cell.live = false;
     liveNeighbours = 3;
     expect(gol.willAlive(cell, liveNeighbours)).to.be(true);
+  });
+});
+
+describe('test world', function(){
+  it('should be true if the world is empty', function(){
+    var world = [];
+    expect(gol.emptyWorld(world)).to.equal(true);
+  });
+
+  it('should add a cell to the world', function(){
+    var world = [];
+    cell.x = 1;
+    cell.y = 1;
+    world = gol.addCell(world, cell);
+    expect(gol.emptyWorld(world)).to.equal(false);
   });
 });
