@@ -105,7 +105,7 @@ gol.Scope.prototype.seed = function(world, seed){
   var cell;
   for (var i = 0; i < this.width; i++){
     for (var j = 0; j < this.height; j++){
-      point = new gol.Point(i, j);
+      point = new gol.Point(j, i);
       if (seed[i * this.width + j]) {
         cell = new gol.Cell(point);
         cell.alive = true;
@@ -118,12 +118,9 @@ gol.Scope.prototype.seed = function(world, seed){
 gol.World.prototype.addAdjacentCellsToTable = function(){
   var adjacents;
   var cell;
-  console.log('countCells: ' + this.countCells());
+
   adjacents = getAdjacentCells(this);
-
   adjacents = filterOutSame(adjacents);
-
-
   pushAdjacentsToTable(this, adjacents);
 
   function getAdjacentCells(world){
@@ -163,5 +160,34 @@ gol.World.prototype.addAdjacentCellsToTable = function(){
     });
   }
 };
+
+gol.World.prototype.getCell = function(point){
+  var c = null;
+  this.table.forEach(function(cell){
+    if (cell.coords.x === point.x && cell.coords.y === point.y) {
+      c = cell;
+    }
+  });
+  return c;
+};
+
+gol.World.prototype.setLiveNeighbours = function(){
+  var that = this;
+  this.table.forEach(function(cell){
+    cell.liveNeighbours = gol.countLiveNeighbours(cell, that);
+  });
+};
+
+gol.nextGen = function(world){
+  var nextTable = [];
+  world.table.forEach(function(cell){
+    if (gol.willAlive(cell)) {
+      cell.alive = true;
+      nextTable.push(cell);
+    }
+  });
+  world.table = nextTable;
+};
+
 
 module.exports = gol;

@@ -117,6 +117,31 @@ describe('scope', function(){
     world.addAdjacentCellsToTable();
     expect(world.countCells()).to.be.equal(15);
   });
+
+  it('should get a cell by a point', function(){
+    var point;
+    scope.seed(world, seed);
+    point = new gol.Point(2, 1);
+    expect(world.getCell(point).alive).to.be(true);
+  });
+
+  it('should set live neighbours', function(){
+    var point;
+    scope.seed(world, seed);
+    world.addAdjacentCellsToTable();
+    point = new gol.Point(2, 0);
+    world.setLiveNeighbours();
+    expect(world.getCell(point).liveNeighbours).to.equal(1);
+  });
+
+  it('should generate the next generation', function(){
+    scope.seed(world, seed);
+    world.addAdjacentCellsToTable();
+    world.setLiveNeighbours();
+    gol.nextGen(world);
+    cell = new gol.Cell(new gol.Point(0, 2));
+    expect(gol.countLiveNeighbours(cell, world)).to.equal(1);
+  });
 });
 
 
