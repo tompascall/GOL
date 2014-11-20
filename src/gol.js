@@ -115,4 +115,53 @@ gol.Scope.prototype.seed = function(world, seed){
   }
 };
 
+gol.World.prototype.addAdjacentCellsToTable = function(){
+  var adjacents;
+  var cell;
+  console.log('countCells: ' + this.countCells());
+  adjacents = getAdjacentCells(this);
+
+  adjacents = filterOutSame(adjacents);
+
+
+  pushAdjacentsToTable(this, adjacents);
+
+  function getAdjacentCells(world){
+    var point;
+    var adjacents = [];
+    var cellCoord;
+    world.table.forEach(function(cell){
+      cellCoord = cell.coords;
+      world.neighbourMatrix.forEach(function(neigh){
+        point = new gol.Point(cellCoord.x + neigh.x, cellCoord.y + neigh.y);
+        if (!world.isAlive(point)) {
+          cell = new gol.Cell(point);
+          cell.alive = false;
+          adjacents.push(cell);
+        }
+      });
+    });
+    return adjacents;
+  }
+
+  function filterOutSame(adjacents){
+    var coords;
+    var buffer = [];
+    return adjacents.filter(function(cell){
+      coords = cell.coords.x + ';' + cell.coords.y;
+      if (buffer.indexOf(coords) === -1) {
+        buffer.push(coords);
+        return true;
+      }
+      else return false;
+    });
+  }
+
+  function pushAdjacentsToTable(world, adjacents){
+    adjacents.forEach(function(cell){
+      world.addCell(cell);
+    });
+  }
+};
+
 module.exports = gol;

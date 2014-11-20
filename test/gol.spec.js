@@ -89,29 +89,34 @@ describe('test world', function(){
 });
 
 describe('scope', function(){
+  var seed = [0, 0, 0, 0, 0,
+              0, 0, 1, 0, 0,
+              0, 0, 1, 0, 0,
+              0, 0, 1, 0, 0,
+              0, 0, 0, 0, 0];
+  var scope;
+  var cell;
 
   beforeEach(function(){
     world = new gol.World();
+    scope = new gol.Scope(5, 5);
   });
 
   it('should initialize scope', function(){
-    var scope = new gol.Scope(5, 5);
     expect(scope.length()).to.be.equal(25);
   });
 
   it('should seed the table', function(){
-    var seed = [0, 0, 0, 0, 0,
-                0, 0, 1, 0, 0,
-                0, 0, 1, 0, 0,
-                0, 0, 1, 0, 0,
-                0, 0, 0, 0, 0];
-
-    var scope = new gol.Scope(5, 5);
     scope.seed(world, seed);
     var cell = new gol.Cell(new gol.Point(2, 2));
     expect(gol.countLiveNeighbours(cell, world)).to.equal(2);
   });
 
+  it('should add adjacent dead cells to table', function(){
+    scope.seed(world, seed);
+    world.addAdjacentCellsToTable();
+    expect(world.countCells()).to.be.equal(15);
+  });
 });
 
 
