@@ -11,6 +11,16 @@ gol.willAlive = function(cell, liveNeighbours){
   if (cell.live === false && liveNeighbours === 3) return true;
 };
 
+gol.Cell = function(x, y){
+  if (typeof x !== undefined) this.x = x;
+  if (typeof y !== undefined) this.y = y;
+  this.live = true;
+};
+
+gol.Cell.prototype.toString = function(){
+  return this.x + ';' + this.y;
+};
+
 gol.World = function(){
   this.table = [];
 };
@@ -24,14 +34,12 @@ gol.World.prototype.emptyWorld = function(){
 };
 
 gol.World.prototype.addCell = function(cell){
-  cell = cell.x + ';' + cell.y;
-  this.table.push(cell);
+  this.table.push(cell.toString());
 };
 
 gol.World.prototype.removeCell = function(cell){
-  cell = cell.x + ';' + cell.y;
   this.table = this.table.filter(function(elem){
-    return elem !== cell;
+    return elem !== cell.toString();
   });
 };
 
