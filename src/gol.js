@@ -1,14 +1,16 @@
 // gol.js
+
 'use strict';
 
 var gol = {};
 
-gol.willAlive = function(cell, liveNeighbours){
-  if (liveNeighbours < 2 || liveNeighbours > 3) return false;
-  if (cell.live === true && (liveNeighbours === 2 || liveNeighbours === 3)) {
-    return true;
-  }
-  if (cell.live === false && liveNeighbours === 3) return true;
+gol.willAlive = function(cell){
+  if (cell.liveNeighbours < 2 || cell.liveNeighbours > 3) return false;
+  if (cell.live === true &&
+    (cell.liveNeighbours === 2 || cell.liveNeighbours === 3)) {
+      return true;
+    }
+  if (cell.live === false && cell.liveNeighbours === 3) return true;
 };
 
 gol.Cell = function(x, y){
