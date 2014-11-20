@@ -1,4 +1,4 @@
-###Game of Life
+###Conway's Game of Life
 
 This is a minimal Game of Life project using test driven approach with Node.js, Mocha, Expect.js, Sinon.js, and Grunt task automation.
 
