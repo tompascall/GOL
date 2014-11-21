@@ -92,6 +92,7 @@ gol.Scope = function(width, height){
 };
 
 gol.Scope.prototype.erase = function(){
+  this.space = [];
   for (var i = 0; i < this.height; i++){
     for (var j = 0; j <= this.width; j++){
       if (j === this.width) {

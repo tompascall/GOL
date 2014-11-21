@@ -5,13 +5,19 @@ This is a minimal Game of Life project using test driven approach with Node.js, 
 ####Prerequisities
 
 - [Node.js](http://nodejs.org/)
-- [Grunt](http://gruntjs.com/getting-started)
+- for developing: [Grunt](http://gruntjs.com/getting-started)
 
-####Installation
+####Demo
+
+To run demo type `node src/display.js` in the project library.
+
+####Developing
+
+#####Installation
 
 Clone the project, then run `npm install`.
 
-####Grunt tasks
+#####Grunt tasks
 
 We have the following tasks:
 - jshint to lint .js files
@@ -25,7 +31,7 @@ When developing, run:
 
 - `grunt test:all` to lint your code and run the test suite with all the tests, no matter if there's a failing one.
 
-####Used packages
+#####Used packages
 
 - Grunt.js for task automaton
   - `grunt-contrib-jshint` for linting
