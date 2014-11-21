@@ -100,49 +100,88 @@ describe('scope', function(){
   beforeEach(function(){
     world = new gol.World();
     scope = new gol.Scope(5, 5);
+    scope.seed(world, seed);
   });
 
   it('should initialize scope', function(){
-    expect(scope.length()).to.be.equal(25);
+    scope.erase();
+    expect(scope.length()).to.be.equal(scope.height *
+      (scope.width + 1));
   });
 
   it('should seed the table', function(){
-    scope.seed(world, seed);
     var cell = new gol.Cell(new gol.Point(2, 2));
     expect(gol.countLiveNeighbours(cell, world)).to.equal(2);
   });
 
   it('should add adjacent dead cells to table', function(){
-    scope.seed(world, seed);
-    world.addAdjacentCellsToTable();
+    world.addAdjacentDeadCellsToTable();
     expect(world.countCells()).to.be.equal(15);
   });
 
   it('should get a cell by a point', function(){
     var point;
-    scope.seed(world, seed);
     point = new gol.Point(2, 1);
     expect(world.getCell(point).alive).to.be(true);
   });
 
   it('should set live neighbours', function(){
     var point;
-    scope.seed(world, seed);
-    world.addAdjacentCellsToTable();
-    point = new gol.Point(2, 0);
+    world.addAdjacentDeadCellsToTable();
     world.setLiveNeighbours();
+    point = new gol.Point(2, 0);
     expect(world.getCell(point).liveNeighbours).to.equal(1);
   });
 
   it('should generate the next generation', function(){
-    scope.seed(world, seed);
-    world.addAdjacentCellsToTable();
-    world.setLiveNeighbours();
     gol.nextGen(world);
     cell = new gol.Cell(new gol.Point(0, 2));
     expect(gol.countLiveNeighbours(cell, world)).to.equal(1);
   });
 });
+
+describe('Display', function(){
+  var seed = [0, 0, 0, 0, 0,
+              0, 0, 1, 0, 0,
+              0, 0, 1, 0, 0,
+              0, 0, 1, 0, 0,
+              0, 0, 0, 0, 0];
+  var scope;
+  var cell;
+  var world;
+
+  beforeEach(function(){
+    world = new gol.World();
+    scope = new gol.Scope(5, 5);
+    scope.seed(world, seed);
+  });
+
+  it('should get number of live cells from scope', function(){
+    scope.erase();
+    scope.space[0] = scope.liveChar;
+    expect(scope.getNumberOfLiveCells()).to.equal(1);
+  });
+
+  it('should set the scope by the table', function(){
+    scope.setScopeByTable(world);
+    expect(scope.getNumberOfLiveCells()).to.equal(3);
+  });
+
+  it('should convert scope.space array to string', function(){
+    var space;
+    scope.setScopeByTable(world);
+    space = scope.toString();
+    expect(space).to.be.a('string');
+    expect(space.length).to.equal(scope.height *
+      (scope.width + 1));
+  });
+  it('should display the space', function(){
+    scope.setScopeByTable(world);
+    scope.display();
+    expect(scope.show).to.be(true);
+  });
+});
+
 
 
 
