@@ -1,6 +1,6 @@
 ###Conway's Game of Life
 
-This is a minimal Game of Life project using test driven approach with Node.js, Mocha, Expect.js, Sinon.js, and Grunt task automation.
+This is a minimal [Game of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) project using test driven approach with Node.js, Mocha, Expect.js, and Grunt task automation.
 
 ####Prerequisities
 
@@ -39,9 +39,8 @@ When developing, run:
   - `grunt-contrib-watch`
   - `grunt-mocha-cli` (Mocha testing framework for Grunt)
 - Expect.js as an assertion framework
-- Sinon.js as a mocking tool
 
-####EditorConfig
+#####EditorConfig
 
 EditorConfig is used to maintain consistent coding styles. There is an `.editorconfig` file in the project root directory, that defines the main styles.
 

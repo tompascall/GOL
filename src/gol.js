@@ -99,7 +99,7 @@ gol.Scope.prototype.erase = function(){
         this.space.push('\n');
       }
       else {
-        this.space.push('-');
+        this.space.push('.');
       }
     }
   }
@@ -112,8 +112,8 @@ gol.Scope.prototype.length = function(){
 gol.Scope.prototype.seed = function(world, seed){
   var point;
   var cell;
-  for (var i = 0; i < this.width; i++){
-    for (var j = 0; j < this.height; j++){
+  for (var i = 0; i < this.height; i++){
+    for (var j = 0; j < this.width; j++){
       point = new gol.Point(j, i);
       if (seed[i * this.width + j]) {
         cell = new gol.Cell(point);
