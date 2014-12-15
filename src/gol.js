@@ -51,13 +51,10 @@ gol.CreateBeing.prototype.stringify = function() {
   return this.point.x + ';' + this.point.y;
 };
 
-// gol.addBeing = function(type, point, world) {
-//   var being = {};
-//   being.type = type;
-//   being.point = point;
-//   world.beings.push(being);
-//   return world;
-// };
+gol.addBeing = function(being, world) {
+  world.beings.push(being);
+  return world;
+};
 
 gol.nextGen = function(world) {
   gol.world = world;

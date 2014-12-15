@@ -55,5 +55,15 @@ describe('create beings', function(){
     expect(being.stringified).to.be(x + ';' + y);
   });
 
+  it('should add a being to world', function() {
+    var x = 10;
+    var y = 5;
+    var point = new gol.Point(x, y);
+    var being = new gol.CreateBeing('simple', point);
+    var world = {beings: []};
+    gol.addBeing(being, world);
+    expect(world.beings.length).to.be(1);
+    expect(world.beings[0].stringified).to.be(x + ';' + y);
+  });
 });
 
