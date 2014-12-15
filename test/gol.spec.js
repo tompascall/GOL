@@ -38,19 +38,22 @@ describe('generation next', function(){
   });
 });
 
-describe('create position', function(){
+describe('create beings', function(){
   it('should create a point', function(){
     var x = 10;
     var y = 5;
     var point = new gol.Point(x, y);
     expect(point.x).to.be(x);
     expect(point.y).to.be(y);
-    expect(point.stringified).to.be(x + ';' + y);
   });
 
-  // it('should create a "simple" being', function(){
-  //   var simple = new gol.createBeing('simple', )
-  // })
+  it('should create a "simple" being', function(){
+    var x = 10;
+    var y = 5;
+    var point = new gol.Point(x, y);
+    var being = new gol.CreateBeing('simple', point);
+    expect(being.stringified).to.be(x + ';' + y);
+  });
 
 });
 

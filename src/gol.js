@@ -39,13 +39,25 @@ gol.validateWorld = function() {
 gol.Point = function(x, y) {
   this.x = x;
   this.y = y;
+};
+
+gol.CreateBeing = function(type, point) {
+  this.type = type;
+  this.point = point;
   this.stringified = this.stringify();
 };
 
-gol.Point.prototype.stringify = function() {
-  return this.x + ';' + this.y;
+gol.CreateBeing.prototype.stringify = function() {
+  return this.point.x + ';' + this.point.y;
 };
 
+// gol.addBeing = function(type, point, world) {
+//   var being = {};
+//   being.type = type;
+//   being.point = point;
+//   world.beings.push(being);
+//   return world;
+// };
 
 gol.nextGen = function(world) {
   gol.world = world;
