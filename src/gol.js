@@ -23,9 +23,9 @@ gol.validateWorldHasKey = function(key) {
   }
 };
 
-gol.validateWorldTypeOfKey = function(key, type) {
-  if (typeof gol.world[key] !== type) {
-    throw new Error('Error: "' + key + '" property must be a(n) '+ type);
+gol.validateWorldTypeOfBeing = function() {
+  if (!Array.isArray(gol.world.beings)) {
+    throw new Error('Error: "beings" property must be an array');
   }
 };
 
@@ -33,13 +33,13 @@ gol.validateWorld = function() {
   gol.validateWorldMissing();
   gol.validateWorldIsObject();
   gol.validateWorldHasKey('beings');
-  gol.validateWorldTypeOfKey('beings', 'array');
+  gol.validateWorldTypeOfBeing();
 };
 
 gol.nextGen = function(world) {
   gol.world = world;
   gol.validateWorld();
-  return gol.world;
+  if (world.beings.length === 0) return gol.world;
 };
 
 module.exports = gol;

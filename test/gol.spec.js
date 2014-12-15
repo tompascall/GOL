@@ -24,8 +24,16 @@ describe('world validation', function(){
   });
 
   it('should throw exception if "being" property is not an array', function(){
-    var message = 'Error: "beings" property must be a(n) array';
+    var message = 'Error: "beings" property must be an array';
     var world = {beings : ''};
     expect(helper.testExceptionMessage(message, gol.nextGen, world)).to.be(true);
+  });
+});
+
+describe('generation next', function(){
+  it('should give back "world" if there are zero beings', function(){
+    var world = {beings : []};
+    var nextGeneration = gol.nextGen(world);
+    expect(nextGeneration).to.be(world);
   });
 });
