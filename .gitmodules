@@ -1,0 +1,3 @@
+[submodule "lib/testHelper"]
+	path = lib/testHelper
+	url = https://github.com/tompascall/testHelper.git
