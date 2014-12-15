@@ -37,3 +37,8 @@ describe('generation next', function(){
     expect(nextGeneration).to.be(world);
   });
 });
+
+describe('create beings', function(){
+
+});
+
