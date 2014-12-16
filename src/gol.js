@@ -85,12 +85,14 @@ gol.loadBeingsMap = function(beingsMap, world) {
   var point;
   var index;
   var being;
+  var type;
   for (var i = 0; i < beingsMap.height; i++) {
     for (var j = 0; j < beingsMap.width; j++) {
       index = i*beingsMap.height + j;
-      if (beingsMap.map[index] === 'simp') {
+      type = beingsMap.map[index];
+      if (type !== '0') {
         point = new gol.Point(beingsMap.startX + j, beingsMap.startY + i);
-        being = new gol.CreateBeing('simp', point);
+        being = new gol.CreateBeing(type, point);
         gol.addBeing(being, world);
       }
     }

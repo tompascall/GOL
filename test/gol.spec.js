@@ -82,20 +82,22 @@ describe('create beings', function() {
   it('should load beings to world', function() {
     var beingsMap = {
       map: [
-        '0',    'simp', '0',
-        'simp', 'simp', 'simp',
-        '0',    'simp', '0'
+        '0',    '0',    '0',    '0',    '0',
+        '0',    '0',    'simp', '0',    '0',
+        '0',    'simp', 'simp', 'simp', '0',
+        '0',    '0',    'simp', '0',    '0',
+        '0',    '0',    '0',    '0',    '0'
       ],
-      width: 3,
-      height: 3,
+      width: 5,
+      height: 5,
       startX: 0,
       startY: 0
     };
     var world = {beings: []};
     gol.loadBeingsMap(beingsMap, world);
     expect(world.beings.length).to.be(5);
-    expect(world.beings[0].stringCoord).to.be('1;0');
-    expect(world.beings[3].stringCoord).to.be('2;1');
+    expect(world.beings[0].stringCoord).to.be('2;1');
+    expect(world.beings[3].stringCoord).to.be('3;2');
   });
 });
 
