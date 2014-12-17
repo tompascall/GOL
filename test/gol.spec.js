@@ -50,7 +50,7 @@ describe('create beings', function() {
 
   it('should create a "simp" being', function() {
     var being = new gol.CreateBeing('simp', point);
-    expect(being.stringCoord).to.be(x + ';' + y);
+    expect(being.point.stringCoord).to.be(x + ';' + y);
     expect(being.status).to.be('living');
     expect(being.type).to.be('simp');
   });
@@ -60,7 +60,7 @@ describe('create beings', function() {
     var world = {beings: []};
     gol.addBeing(being, world);
     expect(world.beings.length).to.be(1);
-    expect(world.beings[0].stringCoord).to.be(x + ';' + y);
+    expect(world.beings[0].point.stringCoord).to.be(x + ';' + y);
   });
 
   it('should validate beings map', function(){
@@ -97,8 +97,8 @@ describe('create beings', function() {
     var world = {beings: []};
     gol.loadBeingsMap(beingsMap, world);
     expect(world.beings.length).to.be(5);
-    expect(world.beings[0].stringCoord).to.be('2;1');
-    expect(world.beings[3].stringCoord).to.be('3;2');
+    expect(world.beings[0].point.stringCoord).to.be('2;1');
+    expect(world.beings[3].point.stringCoord).to.be('3;2');
   });
 });
 
@@ -123,7 +123,7 @@ describe('neighbours', function() {
     var point = new gol.Point(2, 1);
     var being = gol.getBeing(point, world);
     expect(being).not.to.be(null);
-    expect(being.stringCoord).to.be('2;1');
+    expect(being.point.stringCoord).to.be('2;1');
     expect(being.type).to.be('simp');
   });
 
@@ -132,15 +132,18 @@ describe('neighbours', function() {
     var being = gol.getBeing(point, world);
     expect(being.envPoints).to.be.an('array');
     expect(being.envPoints.length).to.be(8);
-    var neighbour;
-    var neighbours = being.envPoints.filter(function(point) {
-      neighbour = gol.getBeing(point, world);
-      if (neighbour !== null){
-        return neighbour.type === 'simp';
-      }
-      return false;
-    });
-    expect(neighbours.length).to.be(3);
+  });
+
+  it('should get an array of neighbours coords that has a given type', function() {
+    var point = new gol.Point(2, 1);
+    var being = gol.getBeing(point, world);
+    var simpsPoints = gol.getNeighsPointsByType(being, 'simp', world);
+    expect(simpsPoints.length).to.be(3);
+  });
+
+  it('should set empty neighbours in world', function() {
+    gol.setEmptyNeighsPoints(world);
+    expect(world.emptyNeighsPoints.length).to.be(16);
   });
 });
 
