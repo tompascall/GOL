@@ -207,8 +207,11 @@ describe('get next generation', function() {
     expect(nextGeneration).to.be(testWorld);
   });
 
-  it('should remove beings from world if it will not alive', function() {
+  it('should calculate next generation', function() {
     var nextGeneration = gol.nextGen(world);
+    expect(nextGeneration.beings.length).to.be(3);
+
+    nextGeneration = gol.nextGen(world);
     expect(nextGeneration.beings.length).to.be(3);
   });
 });

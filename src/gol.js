@@ -219,6 +219,10 @@ gol.World.prototype.addAliveNeighbours = function(){
   });
 };
 
+gol.World.prototype.clearNeighbours = function() {
+  this.emptyNeighbours = [];
+};
+
 gol.validateWorldMissing = function(world) {
   if (world === undefined) {
     throw new Error('Error: "world" argument is missing');
@@ -249,6 +253,7 @@ gol.nextGen = function(world) {
 
   world.removeAllNotWillAlive();
   world.addAliveNeighbours();
+  world.clearNeighbours();
   return world;
 };
 
