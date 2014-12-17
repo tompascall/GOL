@@ -15,14 +15,13 @@ describe('create beings', function() {
     expect(point.y).to.be(y);
   });
 
-  it('should create a "simp" being', function() {
-    var being = new gol.CreateBeing('simp', point);
+  it('should create a being', function() {
+    var being = new gol.CreateBeing(point);
     expect(being.point.stringCoord).to.be(x + ';' + y);
-    expect(being.type).to.be('simp');
   });
 
   it('should add a being to world', function() {
-    var being = new gol.CreateBeing('simp', point);
+    var being = new gol.CreateBeing(point);
     var world = new gol.World();
     world.addBeing(being);
     expect(world.beings.length).to.be(1);
@@ -90,7 +89,6 @@ describe('neighbours', function() {
     var being = world.getBeing(point);
     expect(being).not.to.be(null);
     expect(being.point.stringCoord).to.be('2;1');
-    expect(being.type).to.be('simp');
   });
 
   it('should add environment coords while creating being', function() {
@@ -98,13 +96,6 @@ describe('neighbours', function() {
     var being = world.getBeing(point);
     expect(being.envPoints).to.be.an('array');
     expect(being.envPoints.length).to.be(8);
-  });
-
-  it('should get an array of neighbours coords that has a given type', function() {
-    var point = new gol.Point(2, 1);
-    var being = world.getBeing(point);
-    var simpsPoints = world.getNeighsPointsByType(being, 'simp');
-    expect(simpsPoints.length).to.be(3);
   });
 
   it('should set points of empty neighbours in world', function() {
@@ -165,7 +156,7 @@ describe('rules', function() {
 
   it('should apply the fourth rule', function() {
     var point = new gol.Point(4, 2);
-    var emptyNeighbour = new gol.CreateBeing('0', point, 'potential');
+    var emptyNeighbour = new gol.CreateBeing(point, 'potential');
     var willAlive = world.willAlive(emptyNeighbour);
     expect(willAlive).to.be(true);
   });

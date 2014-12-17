@@ -32,8 +32,7 @@ gol.Point.prototype.stringify = function() {
   return this.x + ';' + this.y;
 };
 
-gol.CreateBeing = function(type, point, status) {
-  this.type = type;
+gol.CreateBeing = function(point, status) {
   this.point = point;
   this.status = status;
   this.envPoints = this.setEnvPoints();
@@ -92,9 +91,9 @@ gol.World.prototype.loadBeingsMap = function(beingsMap) {
     for (var j = 0; j < beingsMap.width; j++) {
       index = i*beingsMap.width + j;
       type = beingsMap.map[index];
-      if (type !== '0') {
+      if (type !== 0 && type !== '0') {
         point = new gol.Point(beingsMap.startX + j, beingsMap.startY + i);
-        being = new gol.CreateBeing(type, point, 'alive');
+        being = new gol.CreateBeing(point, 'alive');
         this.addBeing(being);
       }
     }
@@ -109,19 +108,6 @@ gol.World.prototype.getBeing = function(point) {
     }
   }
   return null;
-};
-
-gol.World.prototype.getNeighsPointsByType = function(being, type) {
-  var neighbour;
-  var self = this;
-  var neighbours = being.envPoints.filter(function(point) {
-    neighbour = self.getBeing(point);
-    if (neighbour !== null){
-      return neighbour.type === type;
-    }
-    return false;
-  });
-  return neighbours;
 };
 
 gol.World.prototype.countLiveNeighbours = function(being) {
@@ -172,7 +158,7 @@ gol.World.prototype.setEmptyNeighbours = function() {
   this.setEmptyNeighsPoints();
   var self = this;
   this.emptyNeighsPoints.forEach(function(point) {
-    emptyNeighbour = new gol.CreateBeing('0', point, 'potential');
+    emptyNeighbour = new gol.CreateBeing(point, 'potential');
     self.addEmptyNeighbour(emptyNeighbour);
   });
 };
@@ -214,7 +200,7 @@ gol.World.prototype.addAliveNeighbours = function(){
   var being;
   this.emptyNeighbours.forEach(function(aliveNeighbour) {
     point = aliveNeighbour.point;
-    being = new gol.CreateBeing('simp', point, 'alive');
+    being = new gol.CreateBeing(point, 'alive');
     self.addBeing(being);
   });
 };
