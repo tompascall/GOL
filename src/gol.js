@@ -9,12 +9,6 @@ gol.World = function(){
   this.emptyNeighbours = [];
 };
 
-gol.validateWorldMissing = function() {
-  if (gol.world === undefined) {
-    throw new Error('Error: "world" argument is missing');
-  }
-};
-
 gol.validateParamIsObject = function(param, name) {
   if (!(param instanceof Object)) {
     throw new Error('Error: ' + name + ' argument must be an object');
@@ -26,11 +20,6 @@ gol.validateKey = function(obj, objName, key) {
   if (keys.indexOf(key) === -1) {
     throw new Error('Error: "world" object has no "' + key + '" property');
   }
-};
-
-gol.validateWorld = function() {
-  gol.validateWorldMissing();
-  gol.validateParamIsObject(gol.world, 'world');
 };
 
 gol.Point = function(x, y) {
@@ -206,10 +195,46 @@ gol.World.prototype.willAlive = function(being) {
   return false;
 };
 
+gol.World.removeAllNotWillAlive = function() {
+  var willAliveBeings = [];
+  var willAliveNeighbours = [];
+  willAliveBeings = this.beings.filter(function(being) {
+    return being.willAlive === true;
+  });
+  willAliveNeighbours = this.emptyNeighbours.filter(function(neighbour) {
+    return neighbour.willAlive === true;
+  });
+  this.beings = willAliveBeings;
+  this.emptyNeighbours = willAliveNeighbours;
+};
+
+gol.validateWorldMissing = function(world) {
+  if (world === undefined) {
+    throw new Error('Error: "world" argument is missing');
+  }
+};
+
+gol.validateWorldObject = function(world) {
+  if (!(world instanceof gol.World)) {
+    throw new Error('Error: world argument must be a World object');
+  }
+};
+
+gol.validateWorld = function(world) {
+  gol.validateWorldMissing(world);
+  gol.validateWorldObject(world);
+};
+
 gol.nextGen = function(world) {
-  gol.world = world;
-  gol.validateWorld();
-  if (world.beings.length === 0) return gol.world;
+  gol.validateWorld(world);
+  if (world.beings.length === 0) return world;
+  world.beings.forEach(function(beings) {
+    (world.willAlive(being)) ? being.willAlive = true : being.willAlive = false;
+  });
+  world.emptyNeighbours.forEach(function(neighbour) {
+    (world.willAlive(neighbour)) ? neighbour.willAlive = true : neighbour.willAlive = false;
+  });
+  world.removeAllNotWillAlive();
 };
 
 module.exports = gol;

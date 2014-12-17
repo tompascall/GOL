@@ -5,27 +5,6 @@ var expect = require('expect.js');
 var helper = require('../lib/testHelper/expectHelper.js');
 var gol = require('../src/gol.js');
 
-describe('world validation', function(){
-  it('should throw exception if "world" argument is missing', function() {
-    var message = 'Error: "world" argument is missing';
-    expect(helper.testExceptionMessage(message, gol.nextGen)).to.be(true);
-  });
-
-  it('should throw exception if "world" argument is not an object', function() {
-    var message = 'Error: world argument must be an object';
-    var world = 'foo';
-    expect(helper.testExceptionMessage(message, gol.nextGen, world)).to.be(true);
-  });
-});
-
-describe('generation next', function() {
-  it('should give back "world" if there are zero beings', function(){
-    var world = new gol.World();
-    var nextGeneration = gol.nextGen(world);
-    expect(nextGeneration).to.be(world);
-  });
-});
-
 describe('create beings', function() {
   var x = 10;
   var y = 5;
@@ -192,3 +171,44 @@ describe('rules', function() {
   });
 });
 
+describe('get next generation', function() {
+  var beingsMap = {
+    map: [
+        'simp', '0',    '0',    '0',    '0',
+        'simp', '0',    '0',    '0',    '0',
+        '0',    '0',    'simp', '0',    '0',
+        '0',    '0',    'simp', '0',    '0',
+        '0',    '0',    'simp', '0',    '0',
+        '0',    '0',    '0',    '0',    '0',
+        '0',    '0',    '0',    '0',    '0'
+      ],
+    width: 5,
+    height: 7,
+    startX: 0,
+    startY: 0
+  };
+  var world = new gol.World();
+  world.loadBeingsMap(beingsMap);
+
+  it('should throw exception if "world" argument is missing', function() {
+    var message = 'Error: "world" argument is missing';
+    expect(helper.testExceptionMessage(message, gol.nextGen)).to.be(true);
+  });
+
+  it('should throw exception if "world" argument is not an instance of World object', function() {
+    var message = 'Error: world argument must be a World object';
+    var testWorld = {};
+    expect(helper.testExceptionMessage(message, gol.nextGen, testWorld)).to.be(true);
+  });
+
+  it('should give back "world" if there are zero beings', function(){
+    var testWorld = new gol.World();
+    var nextGeneration = gol.nextGen(testWorld);
+    expect(nextGeneration).to.be(testWorld);
+  });
+
+  it('should remove beings from world if it will not alive', function() {
+    var nextGeneration = gol.nextGen(world);
+    expect(nextGeneration.beings.length).to.be(3);
+  });
+});
