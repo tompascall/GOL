@@ -4,6 +4,11 @@
 
 var gol = {};
 
+gol.World = function(){
+  this.beings = [];
+  this.emptyNeighbours = [];
+};
+
 gol.validateWorldMissing = function() {
   if (gol.world === undefined) {
     throw new Error('Error: "world" argument is missing');
@@ -23,17 +28,9 @@ gol.validateKey = function(obj, objName, key) {
   }
 };
 
-gol.validateWorldTypeOfBeing = function() {
-  if (!Array.isArray(gol.world.beings)) {
-    throw new Error('Error: "beings" property must be an array');
-  }
-};
-
 gol.validateWorld = function() {
   gol.validateWorldMissing();
   gol.validateParamIsObject(gol.world, 'world');
-  gol.validateKey(gol.world, 'world', 'beings');
-  gol.validateWorldTypeOfBeing();
 };
 
 gol.Point = function(x, y) {
@@ -46,10 +43,10 @@ gol.Point.prototype.stringify = function() {
   return this.x + ';' + this.y;
 };
 
-gol.CreateBeing = function(type, point) {
+gol.CreateBeing = function(type, point, status) {
   this.type = type;
   this.point = point;
-  this.status = 'living';
+  this.status = status;
   this.envPoints = this.setEnvPoints();
 };
 
@@ -69,9 +66,8 @@ gol.CreateBeing.prototype.setEnvPoints = function() {
   return envPoints;
 };
 
-gol.addBeing = function(being, world) {
-  world.beings.push(being);
-  return world;
+gol.World.prototype.addBeing = function(being) {
+  this.beings.push(being);
 };
 
 gol.validateBeingsMapValues = function(beingsMap) {
@@ -97,7 +93,7 @@ gol.validateBeingsMap = function(beingsMap) {
   gol.validateBeingsMapValues(beingsMap);
 };
 
-gol.loadBeingsMap = function(beingsMap, world) {
+gol.World.prototype.loadBeingsMap = function(beingsMap) {
   gol.validateBeingsMap(beingsMap);
   var point;
   var index;
@@ -105,37 +101,51 @@ gol.loadBeingsMap = function(beingsMap, world) {
   var type;
   for (var i = 0; i < beingsMap.height; i++) {
     for (var j = 0; j < beingsMap.width; j++) {
-      index = i*beingsMap.height + j;
+      index = i*beingsMap.width + j;
       type = beingsMap.map[index];
       if (type !== '0') {
         point = new gol.Point(beingsMap.startX + j, beingsMap.startY + i);
-        being = new gol.CreateBeing(type, point);
-        gol.addBeing(being, world);
+        being = new gol.CreateBeing(type, point, 'alive');
+        this.addBeing(being);
       }
     }
   }
 };
 
-gol.getBeing = function(point, world) {
+gol.World.prototype.getBeing = function(point) {
   var strPoint = point.x + ';' + point.y;
-  for (var i = 0; i < world.beings.length; i++) {
-    if (world.beings[i].point.stringCoord === strPoint) {
-      return world.beings[i];
+  for (var i = 0; i < this.beings.length; i++) {
+    if (this.beings[i].point.stringCoord === strPoint) {
+      return this.beings[i];
     }
   }
   return null;
 };
 
-gol.getNeighsPointsByType = function(being, type, world) {
+gol.World.prototype.getNeighsPointsByType = function(being, type) {
   var neighbour;
+  var self = this;
   var neighbours = being.envPoints.filter(function(point) {
-    neighbour = gol.getBeing(point, world);
+    neighbour = self.getBeing(point);
     if (neighbour !== null){
       return neighbour.type === type;
     }
     return false;
   });
   return neighbours;
+};
+
+gol.World.prototype.countLiveNeighbours = function(being) {
+  var neighbour;
+  var self = this;
+  var neighbours = being.envPoints.filter(function(point) {
+    neighbour = self.getBeing(point);
+    if (neighbour !== null){
+      return neighbour.status === 'alive';
+    }
+    return false;
+  });
+  return neighbours.length;
 };
 
 gol.filterOutSamePoints = function(points) {
@@ -149,18 +159,51 @@ gol.filterOutSamePoints = function(points) {
   });
 };
 
-gol.setEmptyNeighsPoints = function(world) {
-  if (world.beings.length === 0) return [];
+gol.World.prototype.setEmptyNeighsPoints = function() {
+  if (this.beings.length === 0) return [];
   var neighbours;
   var emptyNeighsPoints = [];
-  world.beings.forEach(function(being) {
+  var self = this;
+  this.beings.forEach(function(being) {
     being.envPoints.forEach(function(neighbourPoint) {
-      if (gol.getBeing(neighbourPoint, world) === null) {
+      if (self.getBeing(neighbourPoint) === null) {
         emptyNeighsPoints.push(neighbourPoint);
       }
     });
   });
-  world.emptyNeighsPoints = gol.filterOutSamePoints(emptyNeighsPoints);
+  this.emptyNeighsPoints = gol.filterOutSamePoints(emptyNeighsPoints);
+};
+
+gol.World.prototype.addEmptyNeighbour = function(emptyNeighbour) {
+  this.emptyNeighbours.push(emptyNeighbour);
+};
+
+gol.World.prototype.setEmptyNeighbours = function() {
+  var emptyNeighbour;
+  this.setEmptyNeighsPoints();
+  var self = this;
+  this.emptyNeighsPoints.forEach(function(point) {
+    emptyNeighbour = new gol.CreateBeing('0', point, 'potential');
+    self.addEmptyNeighbour(emptyNeighbour);
+  });
+};
+
+gol.World.prototype.willAlive = function(being) {
+  var liveNeighbours;
+  liveNeighbours = this.countLiveNeighbours(being);
+  if (liveNeighbours < 2) {
+    return false;
+  }
+  if ((liveNeighbours <= 3) && being.status === 'alive') {
+    return true;
+  }
+  if (liveNeighbours > 3 && being.status === 'alive') {
+    return false;
+  }
+  if (liveNeighbours === 3 && being.status === 'potential') {
+    return true;
+  }
+  return false;
 };
 
 gol.nextGen = function(world) {
