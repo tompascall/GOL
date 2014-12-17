@@ -46,10 +46,27 @@ gol.CreateBeing = function(type, point) {
   this.point = point;
   this.stringCoord = this.stringify();
   this.status = 'living';
+  this.envPoints = this.setEnvPoints();
 };
 
 gol.CreateBeing.prototype.stringify = function() {
   return this.point.x + ';' + this.point.y;
+};
+
+gol.CreateBeing.prototype.setEnvPoints = function() {
+  var envPoints = [];
+  var matrix = [
+    [-1, -1], [0, -1], [1, -1],
+    [-1, 0],           [1, 0],
+    [-1, 1],  [0, 1],  [1, 1]
+  ];
+  var envPoint;
+  var self = this;
+  matrix.forEach(function(offset) {
+    envPoint = new gol.Point(self.point.x + offset[0], self.point.y + offset[1]);
+    envPoints.push(envPoint);
+  });
+  return envPoints;
 };
 
 gol.addBeing = function(being, world) {
@@ -97,6 +114,16 @@ gol.loadBeingsMap = function(beingsMap, world) {
       }
     }
   }
+};
+
+gol.getBeing = function(point, world) {
+  var strPoint = point.x + ';' + point.y;
+  for (var i = 0; i < world.beings.length; i++) {
+    if (world.beings[i].stringCoord === strPoint) {
+      return world.beings[i];
+    }
+  }
+  return null;
 };
 
 gol.nextGen = function(world) {
