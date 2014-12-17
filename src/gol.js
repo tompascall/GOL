@@ -195,7 +195,7 @@ gol.World.prototype.willAlive = function(being) {
   return false;
 };
 
-gol.World.removeAllNotWillAlive = function() {
+gol.World.prototype.removeAllNotWillAlive = function() {
   var willAliveBeings = [];
   var willAliveNeighbours = [];
   willAliveBeings = this.beings.filter(function(being) {
@@ -206,6 +206,17 @@ gol.World.removeAllNotWillAlive = function() {
   });
   this.beings = willAliveBeings;
   this.emptyNeighbours = willAliveNeighbours;
+};
+
+gol.World.prototype.addAliveNeighbours = function(){
+  var self = this;
+  var point;
+  var being;
+  this.emptyNeighbours.forEach(function(aliveNeighbour) {
+    point = aliveNeighbour.point;
+    being = new gol.CreateBeing('simp', point, 'alive');
+    self.addBeing(being);
+  });
 };
 
 gol.validateWorldMissing = function(world) {
@@ -228,13 +239,17 @@ gol.validateWorld = function(world) {
 gol.nextGen = function(world) {
   gol.validateWorld(world);
   if (world.beings.length === 0) return world;
-  world.beings.forEach(function(beings) {
-    (world.willAlive(being)) ? being.willAlive = true : being.willAlive = false;
+  world.beings.forEach(function(being) {
+    being.willAlive = (world.willAlive(being)) ? true : false;
   });
+  world.setEmptyNeighbours();
   world.emptyNeighbours.forEach(function(neighbour) {
-    (world.willAlive(neighbour)) ? neighbour.willAlive = true : neighbour.willAlive = false;
+    neighbour.willAlive = (world.willAlive(neighbour)) ? true : false;
   });
+
   world.removeAllNotWillAlive();
+  world.addAliveNeighbours();
+  return world;
 };
 
 module.exports = gol;

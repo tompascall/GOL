@@ -174,8 +174,8 @@ describe('rules', function() {
 describe('get next generation', function() {
   var beingsMap = {
     map: [
-        'simp', '0',    '0',    '0',    '0',
-        'simp', '0',    '0',    '0',    '0',
+        '0',    '0',    '0',    '0',    '0',
+        '0',    '0',    '0',    '0',    '0',
         '0',    '0',    'simp', '0',    '0',
         '0',    '0',    'simp', '0',    '0',
         '0',    '0',    'simp', '0',    '0',
