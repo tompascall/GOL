@@ -71,8 +71,6 @@ gol.validateBeingsMapKeys = function(beingsMap) {
   gol.validateKey(beingsMap, 'beingsMap', 'map');
   gol.validateKey(beingsMap, 'beingsMap', 'width');
   gol.validateKey(beingsMap, 'beingsMap', 'height');
-  gol.validateKey(beingsMap, 'beingsMap', 'startX');
-  gol.validateKey(beingsMap, 'beingsMap', 'startY');
 };
 
 gol.validateBeingsMap = function(beingsMap) {
@@ -92,7 +90,7 @@ gol.World.prototype.loadBeingsMap = function(beingsMap) {
       index = i*beingsMap.width + j;
       type = beingsMap.map[index];
       if (type !== 0 && type !== '0') {
-        point = new gol.Point(beingsMap.startX + j, beingsMap.startY + i);
+        point = new gol.Point(j, i);
         being = new gol.CreateBeing(point, 'alive');
         this.addBeing(being);
       }

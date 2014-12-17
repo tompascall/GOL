@@ -36,9 +36,7 @@ describe('create beings', function() {
         '0', 's', '0'
       ],
       width: 3,
-      height: 2,
-      startX: 0,
-      startY: 0
+      height: 2
     };
     var world = new gol.World();
     var message = 'Error: inappropriate value of being map dimensions or number of map elements';
@@ -55,9 +53,7 @@ describe('create beings', function() {
         '0',    '0',    '0',    '0',    '0'
       ],
       width: 5,
-      height: 5,
-      startX: 0,
-      startY: 0
+      height: 5
     };
     var world = new gol.World();
     world.loadBeingsMap(beingsMap);
@@ -77,9 +73,7 @@ describe('neighbours', function() {
         '0',    '0',    '0',    '0',    '0'
       ],
       width: 5,
-      height: 5,
-      startX: 0,
-      startY: 0
+      height: 5
     };
   var world = new gol.World();
   world.loadBeingsMap(beingsMap);
@@ -126,9 +120,7 @@ describe('rules', function() {
         '0',    '0',    '0',   '0',    '0',    '0'
       ],
       width: 6,
-      height: 5,
-      startX: 0,
-      startY: 0
+      height: 5
     };
   var world = new gol.World();
   world.loadBeingsMap(beingsMap);
@@ -174,9 +166,7 @@ describe('get next generation', function() {
         '0',    '0',    '0',    '0',    '0'
       ],
     width: 5,
-    height: 7,
-    startX: 0,
-    startY: 0
+    height: 7
   };
   var world = new gol.World();
   world.loadBeingsMap(beingsMap);

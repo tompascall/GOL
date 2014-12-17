@@ -19,53 +19,85 @@ var beingsMap = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ],
   width: 38,
-  height: 11,
-  startX: 0,
-  startY: 0
+  height: 11
 };
 
-function Scope(width, height){
-  this.width = width,
-  this.height = height,
-  this.stringified = this.clear()
-};
+function Displayer(width, height) {
+  this.width = width;
+  this.height = height;
+  this.being = '@';
+  this.emptySpace = '.';
+  this.scope = this.clear();
+  this.stringified = this.stringify();
+}
 
-Scope.prototype.clear = function() {
-  var scope = '';
+Displayer.prototype.clear = function() {
+  var scope = [];
   for (var i = 1; i <= this.height; i++) {
     for (var j = 1; j <= this.width; j++) {
-      scope += '.';
+      scope.push(this.emptySpace);
       if (j === this.width) {
-        scope += '\n';
+        scope.push('\n');
       }
     }
   }
   return scope;
 };
 
-var scope = new Scope(40, 20);
-console.log(scope.stringified);
+Displayer.prototype.stringify = function() {
+  return this.scope.join('');
+};
 
-// var world = new gol.World();
-// world.loadBeingsMap(beingsMap);
-// var nextGeneration;
+Displayer.prototype.addWorld = function(world) {
+  var index;
+  var self = this;
+  world.beings.forEach(function(being) {
+    if (being.point.y < self.height && being.point.x < self.width) {
+      index = being.point.y * (self.width + 1) + being.point.x; // +1 means \n
+      self.scope[index] = self.being;
+    }
+  });
+};
 
-// animate();
+Displayer.prototype.removeWorld = function(world) {
+  var index;
+  var self = this;
+  world.beings.forEach(function(being) {
+    if (being.point.y < self.height && being.point.x < self.width) {
+      index = being.point.y * (self.width + 1) + being.point.x; // +1 means \n
+      self.scope[index] = self.emptySpace;
+    }
+  });
+};
 
-// function animate(){
-//   //display();
-//   setTimeout(function(){
-//     world = gol.nextGen(world);
-//     //scope.setScopeByTable(world);
-//     clearDisplay();
-//     animate();
-//   }, 50);
+Displayer.prototype.display = function() {
+  console.log(this.stringify());
+};
 
-//   function clearDisplay(){
-//     console.log('\n\n\n\n\n\n\n\n\n\n' +
-//                 '\n\n\n\n\n\n\n\n\n\n' +
-//                 '\n\n\n\n\n\n\n\n\n\n' +
-//                 '\n\n\n\n\n\n\n\n\n\n' +
-//                 '\n\n\n\n\n\n\n\n\n\n');
-//   }
-// }
+var world = new gol.World();
+world.loadBeingsMap(beingsMap);
+var nextGeneration;
+var displayer = new Displayer(40, 20);
+displayer.addWorld(world);
+
+displayer.display();
+animate();
+
+function animate(){
+  displayer.display();
+  setTimeout(function(){
+    displayer.removeWorld(world);
+    world = gol.nextGen(world);
+    displayer.addWorld(world);
+    clearDisplay();
+    animate();
+  }, 50);
+
+  function clearDisplay(){
+    console.log('\n\n\n\n\n\n\n\n\n\n' +
+                '\n\n\n\n\n\n\n\n\n\n' +
+                '\n\n\n\n\n\n\n\n\n\n' +
+                '\n\n\n\n\n\n\n\n\n\n' +
+                '\n\n\n\n\n\n\n\n\n\n');
+  }
+}
