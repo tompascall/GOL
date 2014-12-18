@@ -45,10 +45,10 @@ gol.World.prototype.addBeing = function(being) {
   this.beings.push(being);
 };
 
-gol.validateKey = function(obj, objName, key) {
+gol.validateKey = function(obj, key) {
   var keys = Object.keys(obj);
   if (keys.indexOf(key) === -1) {
-    throw new Error('Error: "world" object has no "' + key + '" property');
+    throw new Error('Error: object has no "' + key + '" property');
   }
 };
 
@@ -62,19 +62,19 @@ gol.validateBeingsMapValues = function(beingsMap) {
 };
 
 gol.validateBeingsMapKeys = function(beingsMap) {
-  gol.validateKey(beingsMap, 'beingsMap', 'map');
-  gol.validateKey(beingsMap, 'beingsMap', 'width');
-  gol.validateKey(beingsMap, 'beingsMap', 'height');
+  gol.validateKey(beingsMap, 'map');
+  gol.validateKey(beingsMap, 'width');
+  gol.validateKey(beingsMap, 'height');
 };
 
-gol.validateParamIsObject = function(param, name) {
+gol.validateParamIsObject = function(param) {
   if (!(param instanceof Object)) {
-    throw new Error('Error: ' + name + ' argument must be an object');
+    throw new Error('Error: argument must be an object');
   }
 };
 
 gol.validateBeingsMap = function(beingsMap) {
-  gol.validateParamIsObject(beingsMap, 'beingsMap');
+  gol.validateParamIsObject(beingsMap);
   gol.validateBeingsMapKeys(beingsMap);
   gol.validateBeingsMapValues(beingsMap);
 };
