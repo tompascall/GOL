@@ -18,6 +18,7 @@ var beingsMap = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ],
+  // Gospel Glider Gun / http://en.wikipedia.org/wiki/Gun_(cellular_automaton) /
   width: 38,
   height: 11
 };
@@ -53,7 +54,7 @@ Displayer.prototype.addWorld = function(world) {
   var self = this;
   world.beings.forEach(function(being) {
     if (being.point.y < self.height && being.point.x < self.width) {
-      index = being.point.y * (self.width + 1) + being.point.x; // +1 means \n
+      index = being.point.y * (self.width + 1) + being.point.x; // +1 means '\n'
       self.scope[index] = self.being;
     }
   });
@@ -64,7 +65,7 @@ Displayer.prototype.removeWorld = function(world) {
   var self = this;
   world.beings.forEach(function(being) {
     if (being.point.y < self.height && being.point.x < self.width) {
-      index = being.point.y * (self.width + 1) + being.point.x; // +1 means \n
+      index = being.point.y * (self.width + 1) + being.point.x; // +1 means '\n'
       self.scope[index] = self.emptySpace;
     }
   });
@@ -76,7 +77,6 @@ Displayer.prototype.display = function() {
 
 var world = new gol.World();
 world.loadBeingsMap(beingsMap);
-var nextGeneration;
 var displayer = new Displayer(40, 20);
 displayer.addWorld(world);
 

@@ -4,24 +4,6 @@
 
 var gol = {};
 
-gol.World = function(){
-  this.beings = [];
-  this.emptyNeighbours = [];
-};
-
-gol.validateParamIsObject = function(param, name) {
-  if (!(param instanceof Object)) {
-    throw new Error('Error: ' + name + ' argument must be an object');
-  }
-};
-
-gol.validateKey = function(obj, objName, key) {
-  var keys = Object.keys(obj);
-  if (keys.indexOf(key) === -1) {
-    throw new Error('Error: "world" object has no "' + key + '" property');
-  }
-};
-
 gol.Point = function(x, y) {
   this.x = x;
   this.y = y;
@@ -54,8 +36,20 @@ gol.CreateBeing.prototype.setEnvPoints = function() {
   return envPoints;
 };
 
+gol.World = function(){
+  this.beings = [];
+  this.emptyNeighbours = [];
+};
+
 gol.World.prototype.addBeing = function(being) {
   this.beings.push(being);
+};
+
+gol.validateKey = function(obj, objName, key) {
+  var keys = Object.keys(obj);
+  if (keys.indexOf(key) === -1) {
+    throw new Error('Error: "world" object has no "' + key + '" property');
+  }
 };
 
 gol.validateBeingsMapValues = function(beingsMap) {
@@ -71,6 +65,12 @@ gol.validateBeingsMapKeys = function(beingsMap) {
   gol.validateKey(beingsMap, 'beingsMap', 'map');
   gol.validateKey(beingsMap, 'beingsMap', 'width');
   gol.validateKey(beingsMap, 'beingsMap', 'height');
+};
+
+gol.validateParamIsObject = function(param, name) {
+  if (!(param instanceof Object)) {
+    throw new Error('Error: ' + name + ' argument must be an object');
+  }
 };
 
 gol.validateBeingsMap = function(beingsMap) {
@@ -134,7 +134,6 @@ gol.filterOutSamePoints = function(points) {
 
 gol.World.prototype.setEmptyNeighsPoints = function() {
   if (this.beings.length === 0) return [];
-  var neighbours;
   var emptyNeighsPoints = [];
   var self = this;
   this.beings.forEach(function(being) {

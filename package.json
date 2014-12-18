@@ -1,6 +1,6 @@
 {
   "name": "game-of-life",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Conway's Game of Life project using Node.js, Mocha, Expect.js with Grunt task automation",
   "scripts": {
     "test": [
@@ -10,7 +10,6 @@
   "keywords": [
     "testing",
     "framework",
-    "coderetreat",
     "grunt",
     "mocha",
     "expect.js"
