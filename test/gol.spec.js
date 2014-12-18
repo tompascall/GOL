@@ -31,9 +31,9 @@ describe('create beings', function() {
   it('should validate beings map', function(){
     var beingsMap = {
       map: [
-        '0', 's', '0',
-        's', 's', 's',
-        '0', 's', '0'
+        0,  1,  0,
+        1,  1,  1,
+        0,  1,  0,
       ],
       width: 3,
       height: 2
@@ -46,11 +46,11 @@ describe('create beings', function() {
   it('should load beings to world', function() {
     var beingsMap = {
       map: [
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    'simp', 'simp', 'simp', '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    '0',    '0',    '0',    '0'
+        0,  0,  0,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  1,  1,  1,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  0,  0,  0
       ],
       width: 5,
       height: 5
@@ -66,11 +66,11 @@ describe('create beings', function() {
 describe('neighbours', function() {
   var beingsMap = {
       map: [
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    'simp', 'simp', 'simp', '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    '0',    '0',    '0',    '0'
+        0,  0,  0,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  1,  1,  1,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  0,  0,  0
       ],
       width: 5,
       height: 5
@@ -113,11 +113,11 @@ describe('neighbours', function() {
 describe('rules', function() {
   var beingsMap = {
       map: [
-        '0',    '0',    '0',   '0',    '0',    '0',
-        'simp', 'simp', '0',   'simp', '0',    '0',
-        'simp', 'simp', '0',   'simp', '0',    '0',
-        'simp', '0',    '0',   'simp', '0',    '0',
-        '0',    '0',    '0',   '0',    '0',    '0'
+        0,  0,  0,  0,  0,  0,
+        1,  1,  0,  1,  0,  0,
+        1,  1,  0,  1,  0,  0,
+        1,  0,  0,  1,  0,  0,
+        0,  0,  0,  0,  0,  0
       ],
       width: 6,
       height: 5
@@ -157,13 +157,13 @@ describe('rules', function() {
 describe('get next generation', function() {
   var beingsMap = {
     map: [
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    '0',    'simp', '0',    '0',
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    '0',    '0',    '0'
+        0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0
       ],
     width: 5,
     height: 7
