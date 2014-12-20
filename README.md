@@ -15,7 +15,7 @@ First you have to require gol.js:
 var gol = require('../src/gol.js');
 ```
 
-Then you need a map object that represents the starting situation. `1` represents an alive being, `0` represents an empty cell. You have to give the `width` and `height` of the map, too:
+Then you need a map object (in the below exapmle: `beingsMap`) that represents the starting situation. The `map` array is a matrix, where `1` represents an alive being, `0` represents an empty cell. You have to give the `width` and `height` of the map, too:
 
 ```js
 var beingsMap = {
@@ -42,8 +42,10 @@ world.loadBeingsMap(beingsMap);
 now you can calculate the next generation of the world:
 
 ```js
-var nextGeneration = gol.nextGen(world);
+var world = gol.nextGen(world);
 ```
+
+The `world` object has a `beings` array, that contains all the being objects that will alive in the next generation. A `being` object has a `point` object, that has the coordinates of the being [`point.x` and `point.y`]. 
 
 ####Demo
 
