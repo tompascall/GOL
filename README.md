@@ -15,21 +15,20 @@ First you have to require gol.js:
 var gol = require('../src/gol.js');
 ```
 
-Then you need a map object that represents the starting situation. `'1'` represents an alive being, `0` represents an empty cell. You have to give the `width` and `height` of the map, too:
+Then you need a map object that represents the starting situation. `1` represents an alive being, `0` represents an empty cell. You have to give the `width` and `height` of the map, too:
 
 ```js
 var beingsMap = {
     map: [
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    '1',    '0',    '0',
-        '0',    '0',    '1',    '0',    '0',
-        '0',    '0',    '1',    '0',    '0',
-        '0',    '0',    '0',    '0',    '0',
-        '0',    '0',    '0',    '0',    '0'
+        0,  0,  0,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  1,  0,  0,
+        0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0
       ],
     width: 5,
-    height: 7
+    height: 6
   };
 ```
 
