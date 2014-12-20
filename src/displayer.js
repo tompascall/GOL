@@ -3,7 +3,6 @@
 'use strict';
 
 var gol = require('../src/gol.js');
-
 var beingsMap = {
   map: [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -77,7 +76,7 @@ Displayer.prototype.display = function() {
 
 var world = new gol.World();
 world.loadBeingsMap(beingsMap);
-var displayer = new Displayer(40, 20);
+var displayer = new Displayer(beingsMap.width + 10, beingsMap.height + 10);
 displayer.addWorld(world);
 
 displayer.display();

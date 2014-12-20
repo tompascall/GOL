@@ -7,6 +7,45 @@ This is a minimal [Game of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of
 - [Node.js](http://nodejs.org/)
 - for developing: [Grunt](http://gruntjs.com/getting-started)
 
+####Usage
+
+First you have to require gol.js:
+
+```js
+var gol = require('../src/gol.js');
+```
+
+Then you need a map object that represents the starting situation. `'1'` represents an alive being, `0` represents an empty cell. You have to give the `width` and `height` of the map, too:
+
+```js
+var beingsMap = {
+    map: [
+        '0',    '0',    '0',    '0',    '0',
+        '0',    '0',    '0',    '0',    '0',
+        '0',    '0',    '1',    '0',    '0',
+        '0',    '0',    '1',    '0',    '0',
+        '0',    '0',    '1',    '0',    '0',
+        '0',    '0',    '0',    '0',    '0',
+        '0',    '0',    '0',    '0',    '0'
+      ],
+    width: 5,
+    height: 7
+  };
+```
+
+After that you have to instantiate a `Word` object, and load he map to the world:
+
+```js
+var world = new gol.World();
+world.loadBeingsMap(beingsMap);
+```
+
+now you can calculate the next generation of the world:
+
+```js
+var nextGeneration = gol.nextGen(world);
+```
+
 ####Demo
 
 To run demo type `node src/display.js` in the project library.
