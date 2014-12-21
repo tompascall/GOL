@@ -41,7 +41,7 @@ var world = new gol.World();
 world.loadBeingsMap(beingsMap);
 ```
 
-The `world` object has a `beings` array, that contains all the being objects. To get the coordinates of a `being`, you can use its `getX()` and `getY()` methods.
+The `world` object has a `beings` array, that contains all the alive beings. To get the coordinates of a `being`, you can use its `getX()` and `getY()` methods.
 
 After loading the map to the world, you can calculate the next generation:
 
