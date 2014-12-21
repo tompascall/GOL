@@ -38,7 +38,7 @@ gol.CreateBeing.prototype.setEnvPoints = function() {
   var envPoint;
   var self = this;
   matrix.forEach(function(offset) {
-    envPoint = new gol.Point(self.point.x + offset[0], self.point.y + offset[1]);
+    envPoint = new gol.Point(self.getX() + offset[0], self.getY() + offset[1]);
     envPoints.push(envPoint);
   });
   return envPoints;
