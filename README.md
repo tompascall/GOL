@@ -2,7 +2,7 @@
 
 This is a minimal [Game of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) project using test driven approach with Node.js, Mocha, Expect.js, and Grunt task automation.
 
-####Prerequisities
+####Prerequisites
 
 - [Node.js](http://nodejs.org/)
 - for developing: [Grunt](http://gruntjs.com/getting-started)
@@ -15,7 +15,9 @@ First you have to require gol.js:
 var gol = require('../src/gol.js');
 ```
 
-Then you need a map object (in the below exapmle: `beingsMap`) that represents the starting situation. The `map` array is a matrix, where `1` represents an alive being, `0` represents an empty cell. You have to give the `width` and `height` of the map, too:
+Then you need an object (in the below example called `beingsMap`) that represents the starting situation (the seed of the world). The object must contain the following properties:
+- The `map` array must be a matrix, where the number `1` means an alive being, and number `0` means an empty cell
+- You have to give the `width` and `height` of the matrix, too:
 
 ```js
 var beingsMap = {
@@ -32,7 +34,7 @@ var beingsMap = {
   };
 ```
 
-After that you have to instantiate a `Word` object, and load he map to the world:
+If You have to instantiate a `Word` object, and load the map to the world with `world.loadBeingsMap()` method:
 
 ```js
 var world = new gol.World();
