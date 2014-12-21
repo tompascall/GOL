@@ -18,6 +18,8 @@ describe('create beings', function() {
   it('should create a being', function() {
     var being = new gol.CreateBeing(point);
     expect(being.point.stringCoord).to.be(x + ';' + y);
+    expect(being.getX()).to.be(10);
+    expect(being.getY()).to.be(5);
   });
 
   it('should add a being to world', function() {

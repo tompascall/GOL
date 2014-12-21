@@ -20,6 +20,14 @@ gol.CreateBeing = function(point, status) {
   this.envPoints = this.setEnvPoints();
 };
 
+gol.CreateBeing.prototype.getX = function() {
+  return this.point.x;
+};
+
+gol.CreateBeing.prototype.getY = function() {
+  return this.point.y;
+};
+
 gol.CreateBeing.prototype.setEnvPoints = function() {
   var envPoints = [];
   var matrix = [

@@ -25,8 +25,8 @@ var beingsMap = {
 function Displayer(width, height) {
   this.width = width;
   this.height = height;
-  this.being = '@';
-  this.emptySpace = '.';
+  this.beingChar = '@';
+  this.emptySpaceChar = '.';
   this.scope = this.clear();
   this.stringified = this.stringify();
 }
@@ -35,7 +35,7 @@ Displayer.prototype.clear = function() {
   var scope = [];
   for (var i = 1; i <= this.height; i++) {
     for (var j = 1; j <= this.width; j++) {
-      scope.push(this.emptySpace);
+      scope.push(this.emptySpaceChar);
       if (j === this.width) {
         scope.push('\n');
       }
@@ -52,9 +52,9 @@ Displayer.prototype.addWorld = function(world) {
   var index;
   var self = this;
   world.beings.forEach(function(being) {
-    if (being.point.y < self.height && being.point.x < self.width) {
-      index = being.point.y * (self.width + 1) + being.point.x; // +1 means '\n'
-      self.scope[index] = self.being;
+    if (being.getY() < self.height && being.getX() < self.width) {
+      index = being.getY() * (self.width + 1) + being.getX(); // +1 means '\n'
+      self.scope[index] = self.beingChar;
     }
   });
 };
@@ -63,9 +63,9 @@ Displayer.prototype.removeWorld = function(world) {
   var index;
   var self = this;
   world.beings.forEach(function(being) {
-    if (being.point.y < self.height && being.point.x < self.width) {
-      index = being.point.y * (self.width + 1) + being.point.x; // +1 means '\n'
-      self.scope[index] = self.emptySpace;
+    if (being.getY() < self.height && being.getX() < self.width) {
+      index = being.getY() * (self.width + 1) + being.getX(); // +1 means '\n'
+      self.scope[index] = self.emptySpaceChar;
     }
   });
 };

@@ -39,7 +39,7 @@ var world = new gol.World();
 world.loadBeingsMap(beingsMap);
 ```
 
-now you can calculate the next generation of the world:
+Now you can calculate the next generation of the world:
 
 ```js
 var world = gol.nextGen(world);
