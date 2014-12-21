@@ -39,13 +39,13 @@ var world = new gol.World();
 world.loadBeingsMap(beingsMap);
 ```
 
-Now you can calculate the next generation of the world:
+The `world` object has a `beings` array, that contains all the being objects. To get the coordinates of a `being`, you can use its `getX()` and `getY()` methods.
+
+After loading the map to the world, you can calculate the next generation:
 
 ```js
 var world = gol.nextGen(world);
 ```
-
-The `world` object has a `beings` array, that contains all the being objects that will alive in the next generation. A `being` object has a `point` object, that has the coordinates of the being [`point.x` and `point.y`]. 
 
 ####Demo
 
